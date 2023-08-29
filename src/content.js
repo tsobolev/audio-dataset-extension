@@ -18,11 +18,10 @@ function splitParagraphs() {
 	for (const element of paragraphs) {
 		
 		const text = element.textContent;
-		
-		const sentenceEndings = /[.!?]\s|$/
-		let sentences = text.split(sentenceEndings);
+
+		let sentences = text.split(/(?<=[.!?])\s+(?=[A-Z])/);
 		sentences = sentences.filter(sentence => sentence.trim() !== '');
-		sentences = sentences.map(str => `<span class="ext-sound-onesentence">${str}</span>`).join('. ');
+		sentences = sentences.map(str => `<span class="ext-sound-onesentence">${str}</span>`).join(' ');
 		element.innerHTML = sentences
 		element.classList.add('ext-sound-processed');
 		
