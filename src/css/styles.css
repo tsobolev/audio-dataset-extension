@@ -1,0 +1,38 @@
+.ext-sound-onesentence {
+	padding: 2px;
+	border-radius: 3px;
+	border: 1px solid #eeeeee;
+}
+
+.ext-sound-onesentence:hover {
+	background-color: #eeeeee;
+}
+
+.ext-sound-onesentence-done {
+	background-color: #aaffaa;
+}
+
+.ext-sound-onesentence-done:hover {
+	background-color: #ddffdd;
+}
+
+.ext-sound-onesentence-inprogress {
+	background-color: #ffaaaa;
+}
+
+.ext-sound-onesentence-inprogress:hover {
+	background-color: #ffdddd;
+}
+
+.ext-sound-menu {
+	position: fixed;
+	overflow-y: auto;
+	max-height:95%;
+	top: 10px;
+	right: 10px;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	color: white;
+	zIndex: 9999;
+}
+

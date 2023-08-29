@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "audio-dataset",
+  "version": "0.2",
+  "description": "Allows to record audio for selected sentense on the page and then download them as tarball.",
+  "browser_specific_settings": {
+  "gecko": {
+		"id": "audio-dataset-extension@tsobolev.dev"
+	}
+  },
+  "permissions": [
+    "notifications",
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/styles.css"]
+    }
+  ],
+  "background": {
+	"scripts": ["background.js"],
+	"type": "module"
+  }
+}
+
