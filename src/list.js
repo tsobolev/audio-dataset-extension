@@ -33,7 +33,7 @@ function updateListing() {
 			const cursor = event.target.result;
 			if (cursor) {
 				const blob = cursor.value.audio;
-				const comment = cursor.value.comment;
+				const comment = cursor.value.comment + cursor.value.date + cursor.value.url;
 				const audioUrl = URL.createObjectURL(blob);
 				
 				const newRow = audioTableBody.insertRow();
@@ -106,7 +106,7 @@ function downloadDataset() {
 				
 			  const fileName = generateRandomFilename(16)
 
-				files.push({filename:fileName,audio:blob,comment:comment})
+				files.push({ filename: fileName, audio: blob, comment: comment, date: cursor.value.date, url: cursor.value.url })
 				
 				cursor.continue();
 			} else {
@@ -136,7 +136,7 @@ function downloadTar(files){
 		audiofile.name = `${file.filename}.ogg`;
 		audiofile.lastModifiedDate = new Date();
 		tarWriter.addFile(`dataset/data/${audiofile.name}`, audiofile);
-    const metadata_record = {file_name: `data/${audiofile.name}`, date: audiofile.lastModifiedDate.toISOString(), text: file.comment}
+    const metadata_record = { file_name: `data/${audiofile.name}`, date: file.date.toISOString(), url: file.url, text: file.comment }
     metadata.push(metadata_record)
 	});
   

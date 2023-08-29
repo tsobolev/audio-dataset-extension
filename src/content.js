@@ -34,9 +34,9 @@ function appendButtons() {
 	sentenceElements.forEach(element => {
 		element.addEventListener("click", () => {
 			if(element.classList.contains('ext-sound-onesentence-inprogress')){
-				browser.runtime.sendMessage({ action:'stopRecord',text:element.textContent })
+				browser.runtime.sendMessage({ action:'stopRecord', text:element.textContent, url:window.location.href })
 			}else{
-				browser.runtime.sendMessage({ action:'startRecord',text:element.textContent })
+				browser.runtime.sendMessage({ action:'startRecord', text:element.textContent, url:window.location.href })
 				currentSentence = element
 			}
 		});

@@ -8,7 +8,7 @@ let lastRecord = null
 let recording = false
 let recordsCounter = 0
 
-function saveBlobToIndexDB(blob,comment){
+function saveBlobToIndexDB(blob,comment,page_url){
 	
 	const request = indexedDB.open(dbName, dbVersion);
 	
@@ -25,8 +25,9 @@ function saveBlobToIndexDB(blob,comment){
 		const db = event.target.result;
 		const transaction = db.transaction([dbStoreName], "readwrite");
 		const store = transaction.objectStore(dbStoreName);
-		
-		const audioObject = { audio: blob, comment: comment };
+	  const date = new Date();
+
+		const audioObject = { audio: blob, comment: comment, date: date, url: page_url };
 		const addRequest = store.add(audioObject);
 		
 		addRequest.onsuccess = () => {
@@ -56,9 +57,10 @@ function removeRecordFromIndexedDB(key) {
 	};
 }
 
-async function startAudioRecording(text) {	
-	let comment = text
-	if (recording) {
+async function startAudioRecording(message) {	
+	let comment = message.text
+  let page_url = message.url
+  if (recording) {
 		if (mediaRecorder && mediaRecorder.state === "recording") {
 			mediaRecorder.stop();
 			recording = false
@@ -74,7 +76,7 @@ async function startAudioRecording(text) {
 						recordsCounter = recordsCounter + 1
 						extSoundCounter.innerHTML = recordsCounter
 						extSoundRecordingStatus.innerHTML = 'Stopped'
-						saveBlobToIndexDB(event.data,comment)
+						saveBlobToIndexDB(event.data,comment,page_url)
 					};
 				}
 				
@@ -94,10 +96,10 @@ dropLastRecord.addEventListener('click',()=>{
 })
 browser.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 	if (message.action === "startRecord") {
-		startAudioRecording(message.text)
+		startAudioRecording(message)
 	}
 	if (message.action === "stopRecord") {
-		startAudioRecording(message.text)
+		startAudioRecording(message)
 	}
 });
 
