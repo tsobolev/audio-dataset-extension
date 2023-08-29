@@ -13,3 +13,4 @@ Once tarball is unpacked, it can be loaded as audio dataset like this:
 To build .xpi from src run:  cd src; zip -r ../asrdataset.xpi *
 Extension can be installed to Firefox-developer-edition (about:config xpinstall.signatures.required=False)
 
+https://raw.githubusercontent.com/ankitrohatgi/tarballjs/master/tarball.js is used for download function. 
