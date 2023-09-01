@@ -2,14 +2,39 @@ const dbName = "asrDatasetDb";
 const dbVersion = 1;
 const dbStoreName = "asrDatasetDbStore";
 const downloadButton = document.getElementById('downloadButton');
+const clearButton = document.getElementById('clearButton');
 
 downloadButton.addEventListener("click", downloadDataset);
+clearButton.addEventListener("click", clearDatabase);
+
 
 browser.runtime.onMessage.addListener(async function(message, sender, sendResponse) {
 	if (message.action === 'recordStopped') {
 		updateListing()
 	}
 });
+
+function clearDatabase() {
+
+	const request = indexedDB.open(dbName, dbVersion);
+	
+	request.onerror = event => {
+		console.error("IndexedDB error:", event.target.error);
+	};
+	
+	request.onsuccess = event => {
+		const db = event.target.result;
+		const transaction = db.transaction([dbStoreName], "readwrite");
+		const store = transaction.objectStore(dbStoreName);
+		const clearRequest = store.clear();
+
+    clearRequest.onsuccess = event => {
+      updateListing()
+    }
+	};
+
+
+}
 
 function updateListing() {
 	
